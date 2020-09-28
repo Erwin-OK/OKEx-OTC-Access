@@ -225,6 +225,7 @@ public static String signWithRSAAndPublicKey(String data, String publicKey) {
 
 ```
 
+## 交互示例
 ![](./images/第三方接入-Home.png)
 ![](./images/第三方接入-邮箱验证备份.png)
 ![](./images/第三方接入-确定购买.png)
