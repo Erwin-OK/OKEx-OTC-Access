@@ -224,4 +224,4 @@ public static String signWithRSAAndPublicKey(String data, String publicKey) {
 }
 
 ```
-![avatar](/Users/erwin/Downloads/第三方接入/第三方接入-选择钱包地址.png)
+![avatar](./第三方接入-选择钱包地址.png)
