@@ -107,13 +107,13 @@ public static String signWithRSAAndPublicKey(String data, String publicKey) {
 #### 请求头
 
 |参数名称|描述|
-|---|---|---|
+|---|---|
 |parentId|由okex提供的唯一标识|
 #### 请求参数
 公共参数已省略，详细见 请求公共参数，其他参数如下：
 
 |参数名称|类型|是否必选|描述|
-|---|---|---|---|---|
+|---|---|---|---|
 |fiatCurrency|String| Y |法币|
 |cryptoCurrency|String| Y |加密货币|
 |addressList|List| Y |address必须，tag非必须，加密货币的地址列表,最多传递5个地址，最少一个|
