@@ -229,3 +229,5 @@ public static String signWithRSAAndPublicKey(String data, String publicKey) {
 ![](./images/第三方接入-邮箱验证备份.png)
 ![](./images/第三方接入-确定购买.png)
 ![](./images/第三方接入-交易完成.png)
+
+<img src="./images/第三方接入-交易完成.png" alt="图片替换文本" width="50" height="50" />
