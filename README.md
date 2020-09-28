@@ -224,4 +224,8 @@ public static String signWithRSAAndPublicKey(String data, String publicKey) {
 }
 
 ```
-![avatar](./第三方接入-选择钱包地址.png)
+
+![](./images/第三方接入-Home.png)
+![](./images/第三方接入-邮箱验证备份.png)
+![](./images/第三方接入-确定购买.png)
+![](./images/第三方接入-交易完成.png)
