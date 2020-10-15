@@ -27,7 +27,7 @@ HTTPS 协议
 OKEx OTC接入服务使用签名方法对接口进行鉴权，所有接口每一次请求都需要包含签名信息（signature 参数），以验证用户身份，防止信息被恶意篡改。
 
 ### 申请安全凭证
-在第一次使用 API 之前，需申请安全凭证，安全凭证包括 parentId 和 publicKey ，parentId 是用于标识 API 调用者的身份，publicKey 是用于加密签名字符串和服务器端验证签名字符串的密钥。publicKey 必须严格保管，避免泄露。
+在第一次使用 API 之前，需申请安全凭证，安全凭证包括 partnerId 和 publicKey ，partnerId 是用于标识 API 调用者的身份，publicKey 是用于加密签名字符串和服务器端验证签名字符串的密钥。publicKey 必须严格保管，避免泄露。
 
 ### 签名生成算法
 对于请求的所有参数都需要使用RSA加密算法使用publicKey进行加密。加密完成之后需要将结果作为signature放入请求负载中。
