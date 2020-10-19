@@ -108,7 +108,7 @@ public static String signWithRSAAndPublicKey(String data, String publicKey) {
 
 |参数名称|描述|
 |---|---|
-|partnerId|由okex提供的唯一标识|
+|partnerId|由okex提供的渠道唯一标识|
 
 #### 1.4请求参数
 公共参数已省略，详细见 请求公共参数，其他参数如下：
