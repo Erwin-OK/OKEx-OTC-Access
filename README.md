@@ -27,7 +27,7 @@ HTTPS 协议
 OKEx OTC接入服务使用签名方法对接口进行鉴权，所有接口每一次请求都需要包含签名信息（signature 参数），以验证用户身份，防止信息被恶意篡改。
 
 ### 申请安全凭证
-在第一次使用 API 之前，需申请安全凭证，安全凭证包括 partnerId 和 publicKey ，partnerId 是用于标识 API 调用者的身份，publicKey 是用于加密签名字符串和服务器端验证签名字符串的密钥。publicKey 必须严格保管，避免泄露。
+在第一次使用 API 之前，需申请安全凭证，安全凭证包括 parentId 和 publicKey ，parentId 是用于标识 API 调用者的身份，publicKey 是用于加密签名字符串和服务器端验证签名字符串的密钥。publicKey 必须严格保管，避免泄露。
 
 ### 签名生成算法
 对于请求的所有参数都需要使用RSA加密算法使用publicKey进行加密。加密完成之后需要将结果作为signature放入请求负载中。
@@ -96,7 +96,7 @@ public static String signWithRSAAndPublicKey(String data, String publicKey) {
 
 ## 快速集成
 
-### 发起下单
+### 1.发起下单
 #### 接口地址
 请求方式POST
 
@@ -107,37 +107,45 @@ public static String signWithRSAAndPublicKey(String data, String publicKey) {
 #### 请求头
 
 |参数名称|描述|
-|---|---|
-|parentId|由okex提供的唯一标识|
+|---|---|---|
+|partnerId|由okex提供的唯一标识|
 #### 请求参数
 公共参数已省略，详细见 请求公共参数，其他参数如下：
 
 |参数名称|类型|是否必选|描述|
-|---|---|---|---|
+|---|---|---|---|---|
 |fiatCurrency|String| Y |法币|
 |cryptoCurrency|String| Y |加密货币|
-|addressList|List| Y |address必须，tag非必须，加密货币的地址列表,最多传递5个地址，最少一个|
+|addressList|List| Y |address Object对象，加密货币的地址列表,最多传递5个地址，最少一个|
 |type|String| Y |sell 或者buy|
-|fee|Number| N |手续费（除gas费用外，第三方向用户额外收取的手续费率）|
+|fee|Number| N |手续费（除gas费用外，第三方向用户额外收取的手续费率），目前暂为预留字段|
 |amount|Number| Y |计价货币数量（购买时以法币为准）|
-| signature |String| Y |上述参数通过RSA加密后的结果|
+|signature|String| Y |上述参数通过RSA加密后的结果|
+
+#### address对象
+|address|类型|是否必选|描述|
+|---|---|---|---|---|
+|address|String| Y |加密货币地址|
+|tag|String| N |加密货币标签|
+|subCurrency|String| N |加密货币子链名（例USDT:ERC20）,如过不传递，则okex会采用默认的|
 
 请求示例
 
 ```
-{   
+{
     "fiatCurrency":"CNY",
-    "cryptoCurrency":"BTC",
+    "cryptoCurrency":"USDT",
     "addressList":[
         {
-            "address":"37ahQsgCy6bcnELyq92dhhDUy9J987r5aS",
-            "tag":null
+            "address":"0x499d4fcb7e9ac30769a292095227aa6bc13357d8",
+            "tag":null,
+            "subCurrency" : "erc20"
         }
     ],
     "type":"buy",
     "fee":"1",
     "amount":200,
-    "signature":""
+    "signature":"DK9FeNXbWIN+WXLGf+UzO+uB5IyeSUdE0jVz8cxKOJDL0MiUUHkNX+y6D0CVczU7ULOD7US9Tr1BGtdE9++nD0CqPjv++3lFlD7jd1mmx2LNsOck/UWJUCN6CeGK9zG5js0WN2R+Gb/LiHQ5kww9qhZ9tY/YLK0wg36pl2c6fBpxww4nb/aghbOdRvOVAa713/Z0QsDvUU7zWFaWrJ1amC/tVQIpWaJ4Sa5CEBMXD5EbzIN2k+OcgnQEXzWLcFrs7eM5dB/3dpnOep1TFZI9fRfiJ6VgPBAgoJ23esWTylJG8iPqzhl4ABDEg7aw/kDuuxeouCUTl7o4NgZJivVHOg=="
 }
 ```
 
@@ -148,8 +156,8 @@ public static String signWithRSAAndPublicKey(String data, String publicKey) {
 |---|---|---|
 |code|Integer|成功 0 失败 非0，参见响应返回码|
 |data|Object|响应体|
-|checkOutUrl|String|重定向url|
-|requestId | String |请求id|
+|data.checkOutUrl|String|重定向url|
+|data.requestId | String |请求id|
 
 
 响应示例
@@ -158,14 +166,65 @@ public static String signWithRSAAndPublicKey(String data, String publicKey) {
 {
     "code": 0,
     "data": {
-        "checkOutUrl": "https://www.okex.com/buy-crypto/access?requestId=dec0ba5f-a6d3-4cdf-b714-403330123d8a", //以实际返回结果为准
-        "requestId": "dec0ba5f-a6d3-4cdf-b714-403330123d8a"
+        "checkOutUrl": "https://www.okex.com/buy-btc?requestId=bd287a49-3568-449a-9435-fc4e0b777cec",
+        "requestId": "bd287a49-3568-449a-9435-fc4e0b777cec"
     },
+    "detailMsg": "",
+    "error_code": "0",
+    "error_message": "",
+    "msg": ""
+}
+```
+### 2.获取支持的币对信息
+#### 接口地址
+请求方式GET
+
+路径 /api/v1/c2c/currency
+
+#### 接口描述
+该接口用于从okex获取支持交易的币对信息
+#### 请求头
+
+|参数名称|描述|
+|---|---|---|
+|partnerId|由okex提供的渠道唯一标识|
+
+
+#### 响应参数
+
+|参数名称|类型|描述|
+|---|---|---|
+|code|Integer|成功 0 失败 非0，参见响应返回码|
+|data|Object|响应体|
+
+
+
+响应示例
+
+```
+{
+    "code": 0,
+    "data": [
+        {
+            "fiat": "CNY",
+            "crypto": [
+                "USDT",
+                "BTC",
+                "ETH",
+                "TRX",
+                "OKB",
+                "ETC"
+            ]
+        }
+    ],
+    "detailMsg": "",
+    "error_code": "0",
+    "error_message": "",
     "msg": ""
 }
 ```
 
-### 回调地址
+### 3.回调地址
 #### 接口地址
 自行定义
 
@@ -178,7 +237,6 @@ public static String signWithRSAAndPublicKey(String data, String publicKey) {
 |参数名称|类型|是否必选|最大长度|描述|
 |---|---|---|---|---|
 |requestId|String|Y||请求ID|
-|parentId|String|Y||okex提供的渠道唯一标识|
 |fiatCurrency|String|Y|| 法币 |
 |cryptoCurrency|String|Y|| 加密货币 |
 |withdrawalAddress|Object|Y|| 提现地址 |
@@ -193,34 +251,18 @@ public static String signWithRSAAndPublicKey(String data, String publicKey) {
 
 ```
 {
-    "requestId"："dec0ba5f-a6d3-4cdf-b714-403330123d8a",
-    "parentId": "okex",     
+    "requestId"："dec0ba5f-a6d3-4cdf-b714-403330123d8a",  
     "fiatCurrency": "CNY",
     "cryptoCurrency": "BTC",
     "withdrawalAddress": { 
         "address": "37ahQsgCy6bcnELyq92dhhDUy9J987r5aS",
-        "tag": null
+        "tag": null,
+        "subCurrency": null
     },
     "type": "buy",
     "fee": "1",
     "amount": 200,
     "tx_id": "xxxxxxxxxxxxx"
-}
-
-```
-
-
-#### 响应参数
-
-|参数名称|类型|描述|
-|---|---|---|
-|code|Integer|成功 0|
-
-响应示例
-
-```
-{
-    "code"：0
 }
 
 ```
