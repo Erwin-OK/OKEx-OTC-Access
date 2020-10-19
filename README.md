@@ -97,19 +97,20 @@ public static String signWithRSAAndPublicKey(String data, String publicKey) {
 ## 快速集成
 
 ### 1.发起下单
-#### 接口地址
+#### 1.1接口地址
 请求方式POST
 
 路径 /api/v1/c2c/check-order
 
-#### 接口描述
+#### 1.2接口描述
 该接口用于向okex传递下单信息，并返回渠道方将引导用户的目标地址（checkOutUrl）
-#### 请求头
+#### 1.3请求头
 
 |参数名称|描述|
 |---|---|---|
 |partnerId|由okex提供的唯一标识|
-#### 请求参数
+
+#### 1.4请求参数
 公共参数已省略，详细见 请求公共参数，其他参数如下：
 
 |参数名称|类型|是否必选|描述|
@@ -122,7 +123,7 @@ public static String signWithRSAAndPublicKey(String data, String publicKey) {
 |amount|Number| Y |计价货币数量（购买时以法币为准）|
 |signature|String| Y |上述参数通过RSA加密后的结果|
 
-#### address对象
+#### 1.5address对象
 |address|类型|是否必选|描述|
 |---|---|---|---|---|
 |address|String| Y |加密货币地址|
@@ -150,7 +151,7 @@ public static String signWithRSAAndPublicKey(String data, String publicKey) {
 ```
 
 
-#### 响应参数
+#### 1.6响应参数
 
 |参数名称|类型|描述|
 |---|---|---|
@@ -176,21 +177,22 @@ public static String signWithRSAAndPublicKey(String data, String publicKey) {
 }
 ```
 ### 2.获取支持的币对信息
-#### 接口地址
-请求方式GET
 
+#### 接口地址
+
+请求方式GET
 路径 /api/v1/c2c/currency
 
-#### 接口描述
+#### 2.1接口描述
 该接口用于从okex获取支持交易的币对信息
-#### 请求头
+#### 2.2请求头
 
 |参数名称|描述|
 |---|---|---|
 |partnerId|由okex提供的渠道唯一标识|
 
 
-#### 响应参数
+#### 2.3响应参数
 
 |参数名称|类型|描述|
 |---|---|---|
@@ -228,10 +230,10 @@ public static String signWithRSAAndPublicKey(String data, String publicKey) {
 #### 接口地址
 自行定义
 
-#### 接口描述
+#### 3.1接口描述
 由渠道方提供接受订单信息
 
-#### 请求参数
+#### 3.2请求参数
 公共参数已省略，详细见 请求公共参数，其他参数如下：
 
 |参数名称|类型|是否必选|最大长度|描述|
