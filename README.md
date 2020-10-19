@@ -107,14 +107,14 @@ public static String signWithRSAAndPublicKey(String data, String publicKey) {
 #### 1.3请求头
 
 |参数名称|描述|
-|---|---|---|
+|---|---|
 |partnerId|由okex提供的唯一标识|
 
 #### 1.4请求参数
 公共参数已省略，详细见 请求公共参数，其他参数如下：
 
 |参数名称|类型|是否必选|描述|
-|---|---|---|---|---|
+|---|---|---|---|
 |fiatCurrency|String| Y |法币|
 |cryptoCurrency|String| Y |加密货币|
 |addressList|List| Y |address Object对象，加密货币的地址列表,最多传递5个地址，最少一个|
@@ -125,7 +125,7 @@ public static String signWithRSAAndPublicKey(String data, String publicKey) {
 
 #### 1.5address对象
 |address|类型|是否必选|描述|
-|---|---|---|---|---|
+|---|---|---|---|
 |address|String| Y |加密货币地址|
 |tag|String| N |加密货币标签|
 |subCurrency|String| N |加密货币子链名（例USDT:ERC20）,如过不传递，则okex会采用默认的|
@@ -188,7 +188,7 @@ public static String signWithRSAAndPublicKey(String data, String publicKey) {
 #### 2.2请求头
 
 |参数名称|描述|
-|---|---|---|
+|---|---|
 |partnerId|由okex提供的渠道唯一标识|
 
 
